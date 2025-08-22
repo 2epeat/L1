@@ -20,5 +20,5 @@ func main() {
 			return math.Pow(float64(num), 2)
 		}(num))
 	}
-	defer time.Sleep(1 * time.Millisecond)
+	time.Sleep(1 * time.Millisecond)
 }
