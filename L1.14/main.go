@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	"reflect"
 )
 
 /*Разработать программу, которая в runtime способна определить тип переменной,
@@ -12,10 +12,19 @@ import (
 
 func main() {
 	var t string
-	if os.Args[1] != "" {
-		t = typeName(os.Args[1])
+	var r string
+	var a = []interface{}{"a", 1, make(chan interface{}), true, map[string]int{"a": 1}}
+	for _, v := range a {
+		t = typeName(v)
+		fmt.Printf("%T | %v\n", v, t)
+		r = reflectType(v)
+		fmt.Printf("%T | %v\n", v, r)
 	}
-	fmt.Printf("%T | %v\n", t, t)
+	fmt.Println("---")
+	for _, v := range a {
+		r = reflectType(v)
+		fmt.Printf("%T | %v\n", v, r)
+	}
 }
 
 func typeName(v interface{}) string {
@@ -26,7 +35,23 @@ func typeName(v interface{}) string {
 		return "string"
 	case bool:
 		return "bool"
-	case chan interface{}:
+	case chan any, chan string, chan int, chan bool:
+		return "chan"
+	default:
+		return "unknown"
+	}
+}
+
+func reflectType(v interface{}) string {
+	val := reflect.ValueOf(v)
+	switch val.Kind() {
+	case reflect.Int:
+		return "int"
+	case reflect.String:
+		return "string"
+	case reflect.Bool:
+		return "bool"
+	case reflect.Chan:
 		return "chan"
 	default:
 		return "unknown"
