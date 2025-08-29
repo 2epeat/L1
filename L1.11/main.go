@@ -15,6 +15,7 @@ B = {2,3,4}
 
 var a = []int{}
 var b = []int{}
+var c = []int{}
 
 func main() {
 	var j = 3 + rand.Intn(5)
@@ -24,10 +25,11 @@ func main() {
 	fmt.Println(a)
 	fmt.Println(b)
 
-	var c = map[int]int{}
+	//var c = map[int]int{}
 	for _, v := range b {
 		if slices.Contains(a, v) {
-			c[v] = v
+			//c[v] = v
+			c = append(c, v)
 		}
 	}
 	fmt.Println(c)
